@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tra.orbit_be.exception.CustomException;
 import tra.orbit_be.exception.ErrorCode;
+import tra.orbit_be.login.service.GithubUserService;
 import tra.orbit_be.login.service.KakaoUserService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class OAuthController {
 
     private final KakaoUserService kakaoUserService;
+    private final GithubUserService githubUserService;
 
     // 카카오 로그인
     @GetMapping("/oauth/kakao/callback")
@@ -30,6 +32,19 @@ public class OAuthController {
             return new ResponseEntity("카카오 로그인 성공", HttpStatus.OK);
         } catch (Exception e) { // 에러나면 false
             throw new CustomException(ErrorCode.INVALID_KAKAO_LOGIN_ATTEMPT);
+        }
+    }
+
+    // 깃허브 로그인
+    @GetMapping("/oauth/github/callback")
+    public ResponseEntity githubLogin(@RequestParam String code,
+                                     HttpServletResponse response) throws JsonProcessingException {
+        try { // 회원가입 진행 성공시
+            githubUserService.githubLogin(code, response);
+            return new ResponseEntity("깃허브 로그인 성공", HttpStatus.OK);
+        } catch (Exception e) { // 에러나면 false
+            System.out.println(e.getMessage());
+            throw new CustomException(ErrorCode.INVALID_GITHUB_LOGIN_ATTEMPT);
         }
     }
 }
