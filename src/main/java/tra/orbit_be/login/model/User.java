@@ -2,6 +2,7 @@ package tra.orbit_be.login.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import tra.orbit_be.domain.Timestamped;
 import tra.orbit_be.login.enums.SocialType;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "users")
-public class User {
+public class User extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
