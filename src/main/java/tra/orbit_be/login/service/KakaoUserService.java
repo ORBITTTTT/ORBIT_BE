@@ -60,7 +60,7 @@ public class KakaoUserService {
 
         // 3. 필요시에 회원가입
         log.info("카카오 로그인 3번 접근");
-        User kakaoUser = resigterKakaoUserIfNeede(kakaoUserInfo);
+        User kakaoUser = resigterKakaoUserIfNeeded(kakaoUserInfo);
 
         // 4. 강제 로그인 처리 & jwt 토큰 발급
         log.info("카카오 로그인 4번 접근");
@@ -79,7 +79,6 @@ public class KakaoUserService {
         body.add("client_id", kakaoClientId); // 본인의 REST API키
         body.add("client_secret", kakaoClientSecret);
         body.add("redirect_uri", kakaoRedirect); // 성공 후 리다이렉트 되는 곳
-//        body.add("redirect_uri", "http://localhost:3000/oauth/kakao/callback");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -96,8 +95,8 @@ public class KakaoUserService {
         // HTTP 응답 (JSON) -> 액세스 토큰 파싱
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(responseBody);
-        return jsonNode.get("access_token").asText();
+        JsonNode responseToken = objectMapper.readTree(responseBody);
+        return responseToken.get("access_token").asText();
     }
 
     // 2. 토큰으로 카카오 API 호출
@@ -137,7 +136,7 @@ public class KakaoUserService {
         String email = jsonNode.get("kakao_account").get("email").asText();
 
         // 기본 이미지
-        // TODO 기본 이미지 바꾸기
+        // TODO 카카오 - 기본 이미지 바꾸기
         String defaultImage = "https://img.freepik.com/free-vector/color-seamless-space-pattern_102902-2360.jpg?w=996&t=st=1686128409~exp=1686129009~hmac=7f68b208a432aecdc1776cfc547ae7b438a265ff566c8cd9457e85b8652659b8";
         String profileImage = defaultImage;
 
@@ -145,7 +144,7 @@ public class KakaoUserService {
     }
 
     // 3. 필요시에 회원가입
-    private User resigterKakaoUserIfNeede(OAuthUserInfoDto kakaoUserInfo) {
+    private User resigterKakaoUserIfNeeded(OAuthUserInfoDto kakaoUserInfo) {
         // socialId로 이미 가입한 회원인지 아닌지 구분하기
         String kakaoSocialId = kakaoUserInfo.getSocialId();
         User kakaoUser = oAuthRepository.findBySocialId(kakaoSocialId)
@@ -173,7 +172,9 @@ public class KakaoUserService {
     // 4. 강제 로그인 처리 & jwt 토큰 발급
     private void jwtTokenCreate(User kakaoUser, HttpServletResponse response) {
         UserDetails userDetails = new UserDetailsImpl(kakaoUser);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
                 userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // 강제 로그인 시도까지 함, 여기까진 평범한 로그인과 같음
