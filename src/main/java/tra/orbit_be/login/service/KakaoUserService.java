@@ -136,9 +136,8 @@ public class KakaoUserService {
         String email = jsonNode.get("kakao_account").get("email").asText();
 
         // 기본 이미지
-        // TODO 카카오 - 기본 이미지 바꾸기
-        String defaultImage = "https://img.freepik.com/free-vector/color-seamless-space-pattern_102902-2360.jpg?w=996&t=st=1686128409~exp=1686129009~hmac=7f68b208a432aecdc1776cfc547ae7b438a265ff566c8cd9457e85b8652659b8";
-        String profileImage = defaultImage;
+        // TODO 카카오 - ORBIT 기본 이미지 바꾸기
+        String profileImage = null;
 
         return new OAuthUserInfoDto(socialId, nickname, email, profileImage);
     }
