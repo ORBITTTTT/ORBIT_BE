@@ -3,6 +3,7 @@ package tra.orbit_be.login.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import tra.orbit_be.domain.Timestamped;
+import tra.orbit_be.dto.user.UserInfoUpdate;
 import tra.orbit_be.login.enums.SocialType;
 import tra.orbit_be.model.user.InterestStack;
 import tra.orbit_be.model.user.Position;
@@ -94,5 +95,15 @@ public class User extends Timestamped {
         this.socialType = socialType;
         this.socialId = socialId;
         this.refreshToken = refreshToken;
+    }
+
+    // 로그인 직후 정보 수정
+    public void updateProfile(UserInfoUpdate userInfo) {
+        this.userNickname = userInfo.getUserNickname();
+        this.userProfileImage = userInfo.getUserProfileImage();
+        this.userPositions = userInfo.getUserPositions();
+        this.userInterestStacks = userInfo.getUserInterestStacks();
+        this.userLinks = userInfo.getUserLinks();
+        this.userIntroduce = userInfo.getUserIntroduce();
     }
 }
