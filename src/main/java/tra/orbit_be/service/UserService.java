@@ -39,6 +39,15 @@ public class UserService {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
+        for (int i = 0; i < userInfo.getUserPositions().size(); i++) {
+            Position position = Position.builder()
+                    .posName(userInfo.getUserPositions().get(i).getPosName())
+                    .user(userDetails.getUser())
+                    .build();
+            // Position 저장
+            positionRepository.save(position);
+        }
+
         // 2. 받아온 사용자 정보 userInfo -> User객체로 변경하기
         user.get().updateProfile(userInfo);
 
