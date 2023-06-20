@@ -17,11 +17,11 @@ public class InterestStack {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long interestTableId;
 
+    // 기술 스택
+    @Column(unique = true)
+    private String stackName;
+
     @ManyToOne
     @JoinColumn(name = "user_userTableId")
     private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "stack_stackTableId")
-    private Stack stack;
 }

@@ -9,8 +9,10 @@ import tra.orbit_be.exception.CustomException;
 import tra.orbit_be.exception.ErrorCode;
 import tra.orbit_be.login.model.User;
 import tra.orbit_be.login.repository.OAuthRepository;
+import tra.orbit_be.model.user.InterestStack;
 import tra.orbit_be.model.user.Position;
 import tra.orbit_be.repository.PositionRepository;
+import tra.orbit_be.repository.InterestStackRepository;
 import tra.orbit_be.security.UserDetailsImpl;
 
 import java.util.Optional;
@@ -23,6 +25,7 @@ public class UserService {
     // User 테이블 사용하는 Repository
     private final OAuthRepository userRepository;
     private final PositionRepository positionRepository;
+    private final InterestStackRepository interestStackRepository;
 
     @Transactional
     public void userInfoUpdate(UserDetailsImpl userDetails, UserInfoUpdate userInfo) {
@@ -39,6 +42,20 @@ public class UserService {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
+        // 직군(Positoin) 저장
+        positionSave(userDetails, userInfo);
+
+        // 기술 스택(InterestStack) 저장
+        stackSave(userDetails, userInfo);
+
+        // 2. 받아온 사용자 정보 userInfo -> User객체로 변경하기
+        user.get().updateProfile(userInfo);
+
+        userRepository.save(user.get());
+    }
+
+    // 직군(Positoin) 저장
+    private void positionSave(UserDetailsImpl userDetails, UserInfoUpdate userInfo) {
         for (int i = 0; i < userInfo.getUserPositions().size(); i++) {
             Position position = Position.builder()
                     .posName(userInfo.getUserPositions().get(i).getPosName())
@@ -47,10 +64,17 @@ public class UserService {
             // Position 저장
             positionRepository.save(position);
         }
+    }
 
-        // 2. 받아온 사용자 정보 userInfo -> User객체로 변경하기
-        user.get().updateProfile(userInfo);
-
-        userRepository.save(user.get());
+    // 기술 스택(InterestStack) 저장
+    private void stackSave(UserDetailsImpl userDetails, UserInfoUpdate userInfo) {
+        for (int i = 0; i < userInfo.getUserInterestStacks().size(); i++) {
+            InterestStack stack = InterestStack.builder()
+                    .stackName(userInfo.getUserInterestStacks().get(i).getStackName())
+                    .user(userDetails.getUser())
+                    .build();
+            // Position 저장
+            interestStackRepository.save(stack);
+        }
     }
 }
