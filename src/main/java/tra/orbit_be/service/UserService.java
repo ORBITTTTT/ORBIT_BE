@@ -2,6 +2,8 @@ package tra.orbit_be.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tra.orbit_be.dto.user.UserInfoUpdate;
@@ -17,6 +19,7 @@ import tra.orbit_be.repository.InterestStackRepository;
 import tra.orbit_be.repository.ProfileLinkRepository;
 import tra.orbit_be.security.UserDetailsImpl;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -31,7 +34,7 @@ public class UserService {
     private final ProfileLinkRepository profileLinkRepository;
 
     @Transactional
-    public void userInfoUpdate(UserDetailsImpl userDetails, UserInfoUpdate userInfo) {
+    public ResponseEntity<String> userInfoUpdate(UserDetailsImpl userDetails, UserInfoUpdate userInfo) {
         /**
          * 1. user 소셜ID로 사용자 찾기
          * 2. 있으면 사용자 정보 업데이트, 없으면 에러문구 내려주기
@@ -47,31 +50,36 @@ public class UserService {
         }
 
         // 사진이 null일 경우
-        String defautImage = "기본 이미지";
+        String defaultImage = "기본 이미지";
         String userProfileImage =
-                (userInfo.getUserProfileImage() == null) ? defautImage : userInfo.getUserProfileImage();
+                (userInfo.getUserProfileImage() == null) ? defaultImage : userInfo.getUserProfileImage();
         // 닉네임
         String userNickname =
-                (userInfo.getUserNickname() == null)
+                (Objects.equals(userInfo.getUserNickname(), ""))
                         ? userDetails.getUser().getUserNickname() : userInfo.getUserNickname();
 
         // 자기소개
         String userIntroduce =
-                (userInfo.getUserIntroduce() == null)
+                (Objects.equals(userInfo.getUserIntroduce(), ""))
                         ? userNickname + " 입니다." : userInfo.getUserIntroduce();
 
         // 직군(Positoin) 저장
-        positionSave(userDetails, userInfo);
+        if (!Objects.equals(userInfo.getUserPositions().get(0).getPosName(), ""))
+            positionSave(userDetails, userInfo);
         // 기술 스택(InterestStack) 저장
-        stackSave(userDetails, userInfo);
+        if (!Objects.equals(userInfo.getUserInterestStacks().get(0).getStackName(), ""))
+            stackSave(userDetails, userInfo);
         // 프로필 링크(ProfileLink) 저장
-        profileLinkSave(userDetails, userInfo);
+        if (!Objects.equals(userInfo.getUserLinks().get(0).getProfileLink(), ""))
+            profileLinkSave(userDetails, userInfo);
 
         // 2. 받아온 사용자 정보 userInfo -> User객체로 변경하기
-        user.get().updateProfile(userInfo);
+        user.get().updateProfile(userInfo, userProfileImage, userNickname, userIntroduce);
 
         // 3. 업데이트 정보 저장
         userRepository.save(user.get());
+
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     // 직군(Positoin) 저장

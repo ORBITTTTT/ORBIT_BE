@@ -98,12 +98,15 @@ public class User extends Timestamped {
     }
 
     // 로그인 직후 정보 수정
-    public void updateProfile(UserInfoUpdate userInfo) {
-        this.userNickname = userInfo.getUserNickname();
-        this.userProfileImage = userInfo.getUserProfileImage();
+    public void updateProfile(UserInfoUpdate userInfo,
+                              String userProfileImage,
+                              String userNickname,
+                              String userIntroduce) {
+        this.userNickname = userNickname;
+        this.userProfileImage = userProfileImage;
         this.userPositions = userInfo.getUserPositions();
         this.userInterestStacks = userInfo.getUserInterestStacks();
         this.userLinks = userInfo.getUserLinks();
-        this.userIntroduce = userInfo.getUserIntroduce();
+        this.userIntroduce = userIntroduce;
     }
 }
