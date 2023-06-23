@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tra.orbit_be.dto.user.UserInfoUpdate;
 import tra.orbit_be.security.UserDetailsImpl;
@@ -25,8 +26,12 @@ public class UserController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody UserInfoUpdate userInfo) {
 
-        userService.userInfoUpdate(userDetails, userInfo);
+         return userService.userInfoUpdate(userDetails, userInfo);
+    }
 
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+    // 닉네임 중복 검사
+    @PostMapping("/users/profile/nickCheck")
+    public ResponseEntity<String> checkNickname(@RequestParam String nickName) {
+        return userService.checkNickname(nickName);
     }
 }

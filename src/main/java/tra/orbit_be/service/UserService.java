@@ -21,6 +21,7 @@ import tra.orbit_be.security.UserDetailsImpl;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -117,5 +118,22 @@ public class UserService {
             // Position 저장
             profileLinkRepository.save(profileLink);
         }
+    }
+
+    // 닉네임 중복 검사
+    public ResponseEntity<String> checkNickname(String nickName) {
+        String nickNamePattern = "^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣~!@#$%^&*]{2,8}"; //닉네임 정규식 패턴
+
+        // nickname 정규식 맞지 않는 경우 오류 메시지 전달
+        if (nickName.equals(""))
+            throw new CustomException(ErrorCode.EMPTY_NICKNAME);
+        else if (userRepository.findByUserNickname(nickName).isPresent())
+            throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
+        else if (nickName.length() < 2 || 8 < nickName.length())
+            throw new CustomException(ErrorCode.NICKNAME_LEGNTH);
+        else if (!Pattern.matches(nickNamePattern, nickName))
+            throw new CustomException(ErrorCode.NICKNAME_WRONG);
+
+        return new ResponseEntity<>("사용 가능한 닉네임입니다.", HttpStatus.OK);
     }
 }
