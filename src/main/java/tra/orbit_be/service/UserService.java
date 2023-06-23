@@ -41,22 +41,36 @@ public class UserService {
         String socialId = userDetails.getUser().getSocialId();
         Optional<User> user = userRepository.findBySocialId(socialId);
 
+        // 사용자가 없을 경우
         if (!user.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
+        // 사진이 null일 경우
+        String defautImage = "기본 이미지";
+        String userProfileImage =
+                (userInfo.getUserProfileImage() == null) ? defautImage : userInfo.getUserProfileImage();
+        // 닉네임
+        String userNickname =
+                (userInfo.getUserNickname() == null)
+                        ? userDetails.getUser().getUserNickname() : userInfo.getUserNickname();
+
+        // 자기소개
+        String userIntroduce =
+                (userInfo.getUserIntroduce() == null)
+                        ? userNickname + " 입니다." : userInfo.getUserIntroduce();
+
         // 직군(Positoin) 저장
         positionSave(userDetails, userInfo);
-
         // 기술 스택(InterestStack) 저장
         stackSave(userDetails, userInfo);
-
         // 프로필 링크(ProfileLink) 저장
         profileLinkSave(userDetails, userInfo);
 
         // 2. 받아온 사용자 정보 userInfo -> User객체로 변경하기
         user.get().updateProfile(userInfo);
 
+        // 3. 업데이트 정보 저장
         userRepository.save(user.get());
     }
 
