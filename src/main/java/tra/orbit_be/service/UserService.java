@@ -19,6 +19,7 @@ import tra.orbit_be.repository.InterestStackRepository;
 import tra.orbit_be.repository.ProfileLinkRepository;
 import tra.orbit_be.security.UserDetailsImpl;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -85,6 +86,11 @@ public class UserService {
 
     // 직군(Positoin) 저장
     private void positionSave(UserDetailsImpl userDetails, UserInfoUpdate userInfo) {
+        // 기존에 있는 데이터 삭제 후 저장하기
+        List<Position> findPositions =
+                positionRepository.findByUserUserTableId(userDetails.getUser().getUserTableId());
+        positionRepository.deleteAll(findPositions);
+
         for (int i = 0; i < userInfo.getUserPositions().size(); i++) {
             Position position = Position.builder()
                     .posName(userInfo.getUserPositions().get(i).getPosName())
@@ -97,6 +103,11 @@ public class UserService {
 
     // 기술 스택(InterestStack) 저장
     private void stackSave(UserDetailsImpl userDetails, UserInfoUpdate userInfo) {
+        // 기존에 있는 데이터 삭제 후 저장하기
+        List<InterestStack> findStacks =
+                interestStackRepository.findByUserUserTableId(userDetails.getUser().getUserTableId());
+        interestStackRepository.deleteAll(findStacks);
+
         for (int i = 0; i < userInfo.getUserInterestStacks().size(); i++) {
             InterestStack stack = InterestStack.builder()
                     .stackName(userInfo.getUserInterestStacks().get(i).getStackName())
@@ -109,6 +120,11 @@ public class UserService {
 
     // 프로필 링크(ProfileLink) 저장
     private void profileLinkSave(UserDetailsImpl userDetails, UserInfoUpdate userInfo) {
+        // 기존에 있는 데이터 삭제 후 저장하기
+        List<ProfileLink> findLinks =
+                profileLinkRepository.findByUserUserTableId(userDetails.getUser().getUserTableId());
+        profileLinkRepository.deleteAll(findLinks);
+
         for (int i = 0; i < userInfo.getUserLinks().size(); i++) {
             ProfileLink profileLink = ProfileLink.builder()
                     .profileLinkTitle(userInfo.getUserLinks().get(i).getProfileLinkTitle())

@@ -22,6 +22,6 @@ public class Position {
     private String posName;
 
     @ManyToOne
-    @JoinColumn(name = "user_userTableId")
+    @JoinColumn(name = "userTableId")
     private User user;
 }

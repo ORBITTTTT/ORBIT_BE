@@ -26,6 +26,6 @@ public class ProfileLink {
     private String profileLink;
 
     @ManyToOne
-    @JoinColumn(name = "user_userTableId")
+    @JoinColumn(name = "userTableId")
     private User user;
 }

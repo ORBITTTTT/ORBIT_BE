@@ -18,10 +18,10 @@ public class InterestStack {
     private Long interestTableId;
 
     // 기술 스택
-    @Column(unique = true)
+    @Column
     private String stackName;
 
     @ManyToOne
-    @JoinColumn(name = "user_userTableId")
+    @JoinColumn(name = "userTableId")
     private User user;
 }
