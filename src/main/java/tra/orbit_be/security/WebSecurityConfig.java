@@ -25,12 +25,26 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity // 스프링 시큐리티 지원을 가능하게 함
-@EnableGlobalMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // @Secured 어노테이션 활성화
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JWTAuthProvider jwtAuthProvider;
     private final HeaderTokenExtractor headerTokenExtractor;
+    private static final String[] PERMIT_URL_ARRAY = {
+            "/auth/**",
+            /* swagger v2 */
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
 
     @Bean
     public BCryptPasswordEncoder encodePassword() {
@@ -54,7 +68,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
         web
                 .ignoring()
-                .antMatchers("/h2-console/**");
+                .antMatchers("/h2-console/**",
+                        "/v2/api-docs",  "/configuration/ui",
+                        "/swagger-resources", "/configuration/security",
+                        "/swagger-ui.html", "/webjars/**","/swagger/**",
+                        "/swagger-ui/**");
     }
 
     @Override
@@ -62,9 +80,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS).permitAll() // preflight 대응
+                .antMatchers(HttpMethod.OPTIONS, PERMIT_URL_ARRAY).permitAll() // preflight 대응
                 // "/auth/**"에 대한 접근을 인증 절차 없이 허용 (로그인 관련 url)
-                .antMatchers("/auth/**").permitAll();
+                .antMatchers(PERMIT_URL_ARRAY).permitAll();
 
         // 특정 권한을 가진 사용자만 접근을 허용해야 할 경우, 하기 항목을 통해 가능
         http
