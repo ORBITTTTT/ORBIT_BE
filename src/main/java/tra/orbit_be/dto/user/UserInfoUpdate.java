@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tra.orbit_be.model.user.InterestStack;
-import tra.orbit_be.model.user.Position;
-import tra.orbit_be.model.user.ProfileLink;
+import tra.orbit_be.domain.user.InterestStack;
+import tra.orbit_be.domain.user.Position;
+import tra.orbit_be.domain.user.ProfileLink;
 
 import java.util.List;
 

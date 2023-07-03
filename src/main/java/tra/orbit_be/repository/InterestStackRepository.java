@@ -1,7 +1,7 @@
 package tra.orbit_be.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tra.orbit_be.model.user.InterestStack;
+import tra.orbit_be.domain.user.InterestStack;
 
 import java.util.List;
 

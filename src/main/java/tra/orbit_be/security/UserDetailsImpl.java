@@ -1,7 +1,7 @@
 package tra.orbit_be.security;
 
 import org.springframework.security.core.GrantedAuthority;
-import tra.orbit_be.login.model.User;
+import tra.orbit_be.login.domain.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -11,7 +11,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private final User user;
 
-    public UserDetailsImpl(tra.orbit_be.login.model.User user) {
+    public UserDetailsImpl(tra.orbit_be.login.domain.User user) {
         this.user = user;
     }
 

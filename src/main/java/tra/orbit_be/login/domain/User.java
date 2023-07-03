@@ -1,13 +1,13 @@
-package tra.orbit_be.login.model;
+package tra.orbit_be.login.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import tra.orbit_be.domain.Timestamped;
 import tra.orbit_be.dto.user.UserInfoUpdate;
 import tra.orbit_be.login.enums.SocialType;
-import tra.orbit_be.model.user.InterestStack;
-import tra.orbit_be.model.user.Position;
-import tra.orbit_be.model.user.ProfileLink;
+import tra.orbit_be.domain.user.InterestStack;
+import tra.orbit_be.domain.user.Position;
+import tra.orbit_be.domain.user.ProfileLink;
 
 import javax.persistence.*;
 import java.util.List;

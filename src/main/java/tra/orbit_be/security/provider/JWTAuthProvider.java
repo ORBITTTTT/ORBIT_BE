@@ -8,7 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import tra.orbit_be.exception.CustomException;
 import tra.orbit_be.exception.ErrorCode;
-import tra.orbit_be.login.model.User;
+import tra.orbit_be.login.domain.User;
 import tra.orbit_be.login.repository.OAuthRepository;
 import tra.orbit_be.security.UserDetailsImpl;
 import tra.orbit_be.security.jwt.JwtDecoder;

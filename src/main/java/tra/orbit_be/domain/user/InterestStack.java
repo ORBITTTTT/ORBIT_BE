@@ -1,7 +1,7 @@
-package tra.orbit_be.model.user;
+package tra.orbit_be.domain.user;
 
 import lombok.*;
-import tra.orbit_be.login.model.User;
+import tra.orbit_be.login.domain.User;
 
 import javax.persistence.*;
 
@@ -11,19 +11,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProfileLink {
+public class InterestStack {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long linkTableId;
+    private Long interestTableId;
 
-    // 링크 제목
+    // 기술 스택
     @Column
-    private String profileLinkTitle;
-
-    // 링크 주소
-    @Column
-    private String profileLink;
+    private String stackName;
 
     @ManyToOne
     @JoinColumn(name = "userTableId")
