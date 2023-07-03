@@ -1,6 +1,8 @@
 package tra.orbit_be.login.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,8 +26,10 @@ public class OAuthController {
     private final GithubUserService githubUserService;
 
     // 카카오 로그인
+    @ApiOperation(value = "카카오 로그인", notes = "카카오 로그인")
     @GetMapping("/oauth/kakao/callback")
-    public ResponseEntity kakaoLogin(@RequestParam String code,
+    public ResponseEntity kakaoLogin(
+            @ApiParam(value = "카카오에서 넘어온 code", required = true) @RequestParam String code,
                                      HttpServletResponse response) throws JsonProcessingException {
         try { // 회원가입 진행 성공시
             kakaoUserService.kakaoLogin(code, response);
@@ -36,8 +40,10 @@ public class OAuthController {
     }
 
     // 깃허브 로그인
+    @ApiOperation(value = "깃허브 로그인", notes = "깃허브 로그인")
     @GetMapping("/oauth/github/callback")
-    public ResponseEntity githubLogin(@RequestParam String code,
+    public ResponseEntity githubLogin(
+            @ApiParam(value = "깃허브에서 넘어온 code", required = true) @RequestParam String code,
                                      HttpServletResponse response) throws JsonProcessingException {
         try { // 회원가입 진행 성공시
             githubUserService.githubLogin(code, response);
