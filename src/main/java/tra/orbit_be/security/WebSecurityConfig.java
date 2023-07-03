@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html",
             "/webjars/**",
             /* swagger v3 */
-            "/v3/api-docs/**",
+            "/v3/api-docs",
             "/swagger-ui/**"
     };
 
@@ -70,9 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/h2-console/**",
                         "/v2/api-docs",  "/configuration/ui",
-                        "/swagger-resources", "/configuration/security",
+                        "/swagger-resources", "/swagger-resources/**", "/configuration/security",
                         "/swagger-ui.html", "/webjars/**","/swagger/**",
-                        "/swagger-ui/**");
+                        "/swagger-ui/**", "/v3/api-docs");
     }
 
     @Override
