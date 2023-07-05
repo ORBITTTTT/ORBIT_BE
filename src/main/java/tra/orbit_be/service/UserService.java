@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tra.orbit_be.dto.user.UserInfoUpdate;
+import tra.orbit_be.dto.request.user.UserInfoUpdate;
 import tra.orbit_be.exception.CustomException;
 import tra.orbit_be.exception.ErrorCode;
 import tra.orbit_be.login.domain.User;

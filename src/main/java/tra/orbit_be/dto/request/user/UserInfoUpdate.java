@@ -1,4 +1,4 @@
-package tra.orbit_be.dto.user;
+package tra.orbit_be.dto.request.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

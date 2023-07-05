@@ -3,7 +3,7 @@ package tra.orbit_be.login.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import tra.orbit_be.domain.Timestamped;
-import tra.orbit_be.dto.user.UserInfoUpdate;
+import tra.orbit_be.dto.request.user.UserInfoUpdate;
 import tra.orbit_be.login.enums.SocialType;
 import tra.orbit_be.domain.user.InterestStack;
 import tra.orbit_be.domain.user.Position;
