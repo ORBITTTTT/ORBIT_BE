@@ -21,7 +21,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import tra.orbit_be.login.dto.OAuthUserInfoDto;
 import tra.orbit_be.login.enums.SocialType;
-import tra.orbit_be.login.model.User;
+import tra.orbit_be.login.domain.User;
 import tra.orbit_be.login.repository.OAuthRepository;
 import tra.orbit_be.security.UserDetailsImpl;
 import tra.orbit_be.security.jwt.JwtTokenUtils;
@@ -182,6 +182,6 @@ public class KakaoUserService {
         UserDetailsImpl userDetails1 = (UserDetailsImpl) authentication.getPrincipal();
         String token = JwtTokenUtils.generateJwtToken(userDetails1);
         response.addHeader("Authorization", "BEARER " + token);
-
+        System.out.println("token = " + token);
     }
 }

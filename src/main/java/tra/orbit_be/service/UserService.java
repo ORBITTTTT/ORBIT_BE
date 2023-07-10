@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import tra.orbit_be.dto.user.UserInfoUpdate;
 import tra.orbit_be.exception.CustomException;
 import tra.orbit_be.exception.ErrorCode;
-import tra.orbit_be.login.model.User;
+import tra.orbit_be.login.domain.User;
 import tra.orbit_be.login.repository.OAuthRepository;
-import tra.orbit_be.model.user.InterestStack;
-import tra.orbit_be.model.user.Position;
-import tra.orbit_be.model.user.ProfileLink;
+import tra.orbit_be.domain.user.InterestStack;
+import tra.orbit_be.domain.user.Position;
+import tra.orbit_be.domain.user.ProfileLink;
 import tra.orbit_be.repository.PositionRepository;
 import tra.orbit_be.repository.InterestStackRepository;
 import tra.orbit_be.repository.ProfileLinkRepository;
@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserService {
 
     // User 테이블 사용하는 Repository
@@ -47,9 +48,7 @@ public class UserService {
         Optional<User> user = userRepository.findBySocialId(socialId);
 
         // 사용자가 없을 경우
-        if (!user.isPresent()) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
+        notFoundUser(user);
 
         // 사진이 null일 경우
         String defaultImage = "기본 이미지";
@@ -151,5 +150,25 @@ public class UserService {
             throw new CustomException(ErrorCode.NICKNAME_WRONG);
 
         return new ResponseEntity<>("사용 가능한 닉네임입니다.", HttpStatus.OK);
+    }
+
+    // 이미지 저장하기
+    public ResponseEntity<String> uploadImage(UserDetailsImpl userDetails, String profileImage) {
+        // user 테이블에서 유저 찾기
+        Optional<User> findUser = userRepository.findBySocialId(userDetails.getUser().getSocialId());
+        // 사용자가 없을 경우
+        notFoundUser(findUser);
+        // 이미지 저장
+        findUser.get().setUserProfileImage(profileImage);
+        userRepository.save(findUser.get());
+
+        return new ResponseEntity<>("프로필 이미지 저장 완료하였습니다.", HttpStatus.OK);
+    }
+
+    // 사용자가 없을 경우
+    private void notFoundUser(Optional<User> findUser) {
+        if (findUser.isEmpty()) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
     }
 }

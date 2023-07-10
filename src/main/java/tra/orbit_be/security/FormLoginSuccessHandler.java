@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import tra.orbit_be.login.dto.LoginUserInfoDto;
-import tra.orbit_be.login.model.User;
 import tra.orbit_be.security.jwt.JwtTokenUtils;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
-package tra.orbit_be.model.user;
+package tra.orbit_be.domain.user;
 
 import lombok.*;
-import tra.orbit_be.login.model.User;
+import tra.orbit_be.login.domain.User;
 
 import javax.persistence.*;
 

@@ -3,7 +3,7 @@ package tra.orbit_be.login.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tra.orbit_be.login.model.User;
+import tra.orbit_be.login.domain.User;
 
 @Getter
 @NoArgsConstructor

@@ -1,7 +1,7 @@
 package tra.orbit_be.login.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tra.orbit_be.login.model.User;
+import tra.orbit_be.login.domain.User;
 
 import java.util.Optional;
 
