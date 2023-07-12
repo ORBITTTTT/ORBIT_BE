@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass // Entity가 자동으로 칼럼으로 인식
 @EntityListeners(AuditingEntityListener.class) // 생성, 변경시간을 자동으로 업데이트
-public abstract class Timestamped {
+public abstract class Timestamped { //다른 곳에서 상속이 되어야만 한다._주
 
     @CreatedDate
     private LocalDateTime createdAt;
