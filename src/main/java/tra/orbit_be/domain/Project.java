@@ -2,14 +2,15 @@ package tra.orbit_be.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tra.orbit_be.dto.user.ProjectRequestDto;
+import tra.orbit_be.dto.ProjectRequestDto;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@NoArgsConstructor
+
 @Getter
 @Entity
+@NoArgsConstructor
 public class Project extends Timestamped{
 
     @Id
@@ -63,4 +64,16 @@ public class Project extends Timestamped{
         this.pmMemberNum = pmMemberNum;
     }
 
+    public Project(ProjectRequestDto projectRequestDto) {
+        this.projectId = projectRequestDto.getProjectId();
+        this.userID = projectRequestDto.getUserID();
+        this.pjStartDate = projectRequestDto.getPjStartDate();
+        this.pjTitle = projectRequestDto.getPjTitle();
+        this.pjExplanation = projectRequestDto.getPjExplanation();
+        this.pjViewCount = projectRequestDto.getPjViewCount();
+        this.beMemberNum = projectRequestDto.getBeMemberNum();
+        this.feMemberNum = projectRequestDto.getFeMemberNum();
+        this.dgMemberNum = projectRequestDto.getDgMemberNum();
+        this.pmMemberNum = projectRequestDto.getPmMemberNum();
+    }
 }
