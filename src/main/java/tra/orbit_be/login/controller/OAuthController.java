@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +31,13 @@ public class OAuthController {
     @GetMapping("/oauth/kakao/callback")
     public ResponseEntity kakaoLogin(
             @ApiParam(value = "카카오에서 넘어온 code", required = true) @RequestParam String code,
-                                     HttpServletResponse response) throws JsonProcessingException {
+            HttpServletResponse response) throws JsonProcessingException {
+        // Header 추가 설정
+        HttpHeaders resHeaders = getHttpHeaders();
+
         try { // 회원가입 진행 성공시
             kakaoUserService.kakaoLogin(code, response);
-            return new ResponseEntity("카카오 로그인 성공", HttpStatus.OK);
+            return new ResponseEntity("카카오 로그인 성공", resHeaders, HttpStatus.OK);
         } catch (Exception e) { // 에러나면 false
             throw new CustomException(ErrorCode.INVALID_KAKAO_LOGIN_ATTEMPT);
         }
@@ -44,13 +48,23 @@ public class OAuthController {
     @GetMapping("/oauth/github/callback")
     public ResponseEntity githubLogin(
             @ApiParam(value = "깃허브에서 넘어온 code", required = true) @RequestParam String code,
-                                     HttpServletResponse response) throws JsonProcessingException {
+            HttpServletResponse response) throws JsonProcessingException {
+        // Header 추가 설정
+        HttpHeaders resHeaders = getHttpHeaders();
+
         try { // 회원가입 진행 성공시
             githubUserService.githubLogin(code, response);
-            return new ResponseEntity("깃허브 로그인 성공", HttpStatus.OK);
+            return new ResponseEntity("깃허브 로그인 성공", resHeaders, HttpStatus.OK);
         } catch (Exception e) { // 에러나면 false
             System.out.println(e.getMessage());
             throw new CustomException(ErrorCode.INVALID_GITHUB_LOGIN_ATTEMPT);
         }
+    }
+
+    // Header 추가 설정
+    private HttpHeaders getHttpHeaders() {
+        HttpHeaders resHeaders = new HttpHeaders();
+        resHeaders.add("Content-Type", "application/json;charset=UTF-8");
+        return resHeaders;
     }
 }

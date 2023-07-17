@@ -2,6 +2,7 @@ package tra.orbit_be.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -149,7 +150,10 @@ public class UserService {
         else if (!Pattern.matches(nickNamePattern, nickName))
             throw new CustomException(ErrorCode.NICKNAME_WRONG);
 
-        return new ResponseEntity<>("사용 가능한 닉네임입니다.", HttpStatus.OK);
+        // Header 추가 설정
+        HttpHeaders resHeaders = getHttpHeaders();
+
+        return new ResponseEntity<>("사용 가능한 닉네임입니다.", resHeaders, HttpStatus.OK);
     }
 
     // 이미지 저장하기
@@ -161,8 +165,17 @@ public class UserService {
         // 이미지 저장
         findUser.get().setUserProfileImage(profileImage);
         userRepository.save(findUser.get());
+        // Header 추가 설정
+        HttpHeaders resHeaders = getHttpHeaders();
 
-        return new ResponseEntity<>("프로필 이미지 저장 완료하였습니다.", HttpStatus.OK);
+        return new ResponseEntity<>("프로필 이미지 저장 완료하였습니다.", resHeaders, HttpStatus.OK);
+    }
+
+    // Header 추가 설정
+    private HttpHeaders getHttpHeaders() {
+        HttpHeaders resHeaders = new HttpHeaders();
+        resHeaders.add("Content-Type", "application/json;charset=UTF-8");
+        return resHeaders;
     }
 
     // 사용자가 없을 경우

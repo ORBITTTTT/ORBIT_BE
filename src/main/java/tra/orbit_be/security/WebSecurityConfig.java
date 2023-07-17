@@ -142,8 +142,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("GET,/oauth/github/callback");
 
         //회원가입하기, 로그인 관련 skipPathList
-        skipPathList.add("POST,/api/signup/checkID");  //username 중복 체크
-        skipPathList.add("POST,/api/signup/nickID");  //nickname 중복 체크
+//        skipPathList.add("POST,/api/signup/checkID");  //username 중복 체크
+        skipPathList.add("POST,/users/profile/nickCheck");  //nickname 중복 체크
 
         //로그인 없이도 접근 가능한 skipPathList
         skipPathList.add("GET,/api/**"); //GET메서드에 /api 다음 주소는 모두 로그인없이 접근 가능
