@@ -12,12 +12,13 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
+    // 프로젝트 생성(게시글 생성)
     public Project createProject(ProjectRequestDto projectRequestDto) {
-
-        return createProject(projectRequestDto);
+        Project project = new Project(projectRequestDto);
+        projectRepository.save(project);
+        return project;
     }
 
 
-    // 게시글 작성(작성자)
 
 }

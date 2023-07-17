@@ -16,7 +16,8 @@ public class ProjectController {
     private final ProjectService projectService;
 
 
-    @PostMapping("/projects/create")    // 프로젝트 생성(게시글 생성)
+    // 프로젝트 생성(게시글 생성)
+    @PostMapping("/projects/create")
     public Project createProject(@RequestBody ProjectRequestDto projectRequestDto) {
         return projectService.createProject(projectRequestDto);
     }
