@@ -157,6 +157,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("GET,/basic.js");
         skipPathList.add("GET,/favicon.ico");
 
+        // 게시글 테스트용
+        //skipPathList.add("GET,/oauth/**");
+        skipPathList.add("POST,/projects/create"); //게시글 작성
+        //skipPathList.add("GET,/oauth/github/callback");
+
         FilterSkipMatcher matcher = new FilterSkipMatcher(
                 skipPathList,
                 "/**"
