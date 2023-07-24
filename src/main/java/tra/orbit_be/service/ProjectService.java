@@ -7,6 +7,8 @@ import tra.orbit_be.dto.ProjectRequestDto;
 import tra.orbit_be.repository.ProjectRepository;
 import tra.orbit_be.security.UserDetailsImpl;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -25,7 +27,7 @@ public class ProjectService {
         return project;
     }
 
-    // 프로젝트 내용 보기(게시글 보기)
+    // 프로젝트 내용 조회(게시글 조회)
     /*
     가져온 id를 repository에서 찾아온 후 id를 내보낸다.
      */
@@ -36,7 +38,9 @@ public class ProjectService {
         return readProject;
     }
 
-
-
-
+    // 프로젝트 목록 조회(게시글 목록 조회)
+    public List<Project> listProject() {
+        List<Project> listProject = projectRepository.findAll();
+        return listProject;
+    }
 }
