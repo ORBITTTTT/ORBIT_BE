@@ -160,7 +160,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 게시글 테스트용
         //skipPathList.add("GET,/oauth/**");
         skipPathList.add("POST,/projects/create"); //게시글 작성
-        //skipPathList.add("GET,/oauth/github/callback");
+        skipPathList.add("GET,/projects/**"); // 개별 게시글 조회
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
                 skipPathList,
