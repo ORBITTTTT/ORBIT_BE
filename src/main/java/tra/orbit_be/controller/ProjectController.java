@@ -23,14 +23,20 @@ public class ProjectController {
     }
 
     // 프로젝트 내용 조회(게시글 조회)
-    @GetMapping("/projects/{id}")
-    public Project readProject(@PathVariable Long id) {
-        return projectService.readProject(id);
+    @GetMapping("/projects/{projectId}")
+    public Project readProject(@PathVariable Long projectId) {
+        return projectService.readProject(projectId);
     }
 
     // 프로젝트 목록 조회(게시글 목록 조회)
     @GetMapping("/projects/all")
     public List<Project> ListProject() {
         return projectService.listProject();
+    }
+
+    // 프로젝트 수정(게시글 수정)
+    @PutMapping("/projects/{projectId}")
+    public Project modifyProject(@PathVariable Long projectId, @RequestBody ProjectRequestDto projectRequestDto) {
+        return projectService.modifyProject(projectId, projectRequestDto);
     }
 }

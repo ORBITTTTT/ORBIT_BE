@@ -14,7 +14,6 @@ import java.util.List;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final UserService userService;
 
 
     // 프로젝트 생성(게시글 생성)
@@ -31,8 +30,8 @@ public class ProjectService {
     /*
     가져온 id를 repository에서 찾아온 후 id를 내보낸다.
      */
-    public Project readProject(Long id) {
-        Project readProject = projectRepository.findByProjectId(id).orElseThrow(
+    public Project readProject(Long projectId) {
+        Project readProject = projectRepository.findByProjectId(projectId).orElseThrow(
                 () -> new NullPointerException("게시글이 존재하지 않습니다.")
         );
         return readProject;
@@ -42,5 +41,13 @@ public class ProjectService {
     public List<Project> listProject() {
         List<Project> listProject = projectRepository.findAll();
         return listProject;
+    }
+
+    // 프로젝트 수정(게시글 수정) 테스트 해야함
+    public Project modifyProject(Long projectId, ProjectRequestDto projectRequestDto) {
+        Project modifyProject = projectRepository.findByProjectId(projectId).orElseThrow(
+                () -> new RuntimeException("게시글이 존재하지 않습니다.")
+        );
+        return modifyProject;
     }
 }
