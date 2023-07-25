@@ -44,10 +44,17 @@ public class ProjectService {
     }
 
     // 프로젝트 수정(게시글 수정) 테스트 해야함
-    public Project modifyProject(Long projectId, ProjectRequestDto projectRequestDto) {
-        Project modifyProject = projectRepository.findByProjectId(projectId).orElseThrow(
-                () -> new RuntimeException("게시글이 존재하지 않습니다.")
-        );
-        return modifyProject;
-    }
+//    public Project modifyProject(Long projectId, ProjectRequestDto projectRequestDto) {
+//        Project modifyProject = projectRepository.findByProjectId(projectId).orElseThrow(
+//                () -> new RuntimeException("게시글이 존재하지 않습니다.")
+//        );
+//        modifyProject.setPjStartDate(projectRequestDto.getPjStartDate());
+//        modifyProject.setPjTitle(projectRequestDto.getPjTitle());
+//        modifyProject.setPjExplanation(projectRequestDto.getPjExplanation());
+//        modifyProject.setBeMemberNum(projectRequestDto.getBeMemberNum());
+//        modifyProject.setFeMemberNum(projectRequestDto.getFeMemberNum());
+//        modifyProject.setDgMemberNum(projectRequestDto.getDgMemberNum());
+//        modifyProject.setPmMemberNum(projectRequestDto.getPmMemberNum());
+//        return modifyProject;
+//    }
 }

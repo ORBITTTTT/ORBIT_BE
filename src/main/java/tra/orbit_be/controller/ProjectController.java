@@ -35,8 +35,8 @@ public class ProjectController {
     }
 
     // 프로젝트 수정(게시글 수정)
-    @PutMapping("/projects/{projectId}")
-    public Project modifyProject(@PathVariable Long projectId, @RequestBody ProjectRequestDto projectRequestDto) {
-        return projectService.modifyProject(projectId, projectRequestDto);
-    }
+//    @PutMapping("/projects/{projectId}")
+//    public Project modifyProject(@PathVariable Long projectId, @RequestBody ProjectRequestDto projectRequestDto) {
+//        return projectService.modifyProject(projectId, projectRequestDto);
+//    }
 }

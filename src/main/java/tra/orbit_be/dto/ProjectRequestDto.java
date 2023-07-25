@@ -21,7 +21,8 @@ public class ProjectRequestDto {    //필요한 정보를 물고 다니는 애
     private int dgMemberNum;
     private int pmMemberNum;
 
-    public ProjectRequestDto(Date pjStartDate, String pjTitle, String pjExplanation, Boolean pjStatus, int beMemberNum, int feMemberNum, int dgMemberNum, int pmMemberNum) {
+    public ProjectRequestDto(Date pjStartDate, String pjTitle, String pjExplanation, Boolean pjStatus,
+                             int beMemberNum, int feMemberNum, int dgMemberNum, int pmMemberNum) {
         this.pjStartDate = pjStartDate;
         this.pjTitle = pjTitle;
         this.pjExplanation = pjExplanation;
